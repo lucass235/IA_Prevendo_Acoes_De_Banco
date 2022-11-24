@@ -2,14 +2,24 @@
 
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-import numpy as np
+#  biblioteca numpy que é usada para trabalhar com arrays e matrizes multidimensionais
+import numpy as np 
+#  biblioteca pandas que é usada para trabalhar com dados tabulares e séries temporais 
 import matplotlib.pyplot as plt
+#  biblioteca matplotlib que é usada para plotar gráficos 
 import pandas as pd
+# biblioteca pandas_datareader que é usada para importar dados do Yahoo Finance
 import pandas_datareader as web
+# biblioteca datetime que é usada para trabalhar com datas e horas 
 import datetime as dt
 
+# biblioteca keras que é usada para criar e treinar redes neurais
 from sklearn.preprocessing import MinMaxScaler
+# Sequential é uma pilha de camadas onde cada camada tem exatamente um tensor de entrada e um tensor de saída 
 from tensorflow.keras.models import Sequential
+# Dense é uma camada de neurônios totalmente conectados, onde cada neurônio está conectado a todos os neurônios na próxima camada
+# Dropout é uma técnica de regularização que previne o overfitting 
+# LSTM é uma camada de rede neural recorrente que é usada para processar sequências de dados 
 from tensorflow.keras.layers import Dense, Dropout, LSTM
 
 banco = 'BBAS3.SA' # Banco do Brasil
@@ -18,6 +28,8 @@ inicio = dt.datetime(2012,1,1) # data de inicio
 fim = dt.datetime(2022,11,18) # data de hoje
 
 dados = web.DataReader(banco, 'yahoo', inicio, fim) # pega os dados do yahoo finance
+
+print(dados)
 
 # Preparação dos dados
 normalizando = MinMaxScaler(feature_range=(0,1)) # normalizando os dados entre 0 e 1
