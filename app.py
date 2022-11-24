@@ -23,7 +23,7 @@ dados = web.DataReader(banco, 'yahoo', inicio, fim) # pega os dados do yahoo fin
 normalizando = MinMaxScaler(feature_range=(0,1)) # normalizando os dados entre 0 e 1
 dados_normalizados = normalizando.fit_transform(dados['Close'].values.reshape(-1,1)) # normalizando os dados de fechamento 
 
-previsao_dias = 60 # dias para prever
+previsao_dias = 3 # dias para prever
 
 x_treinar, y_treinar = [], []
 
@@ -89,13 +89,25 @@ previsao_precos = normalizando.inverse_transform(previsao_precos) # desnormaliza
 
 # representação gráfica dos dados
 
-plt.plot(precos_reais, color='black', label=f'Preço real {banco}')
+plt.plot(precos_reais, color='red', label=f'Preço real {banco}')
 plt.plot(previsao_precos, color='green', label=f'Preço previsto {banco}')
 plt.title(f'{banco} Preço real x Preço previsto')
 plt.xlabel('Tempo')
 plt.ylabel('Preço do Ação')
 plt.legend()
 plt.show()
+
+# prevendo os próximos dias
+
+# pegando os dados de fechamento e colocando em x_treinar e y_label para prever os próximos dias
+dados_reais = [modelo_entradas[len(modelo_entradas) + 1 - previsao_dias:len(modelo_entradas+1), 0]] 
+dados_reais = np.array(dados_reais) # transformando em array numpy
+dados_reais = np.reshape(dados_reais, (dados_reais.shape[0], dados_reais.shape[1], 1)) # redimensionando os dados
+
+previsao = modelo.predict(dados_reais) # fazendo as previsões
+previsao = normalizando.inverse_transform(previsao) # desnormalizando os dados
+
+print(f'Preço previsto para amanhã: {previsao}')
 
 
 
