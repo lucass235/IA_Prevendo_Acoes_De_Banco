@@ -99,7 +99,7 @@ plt.show()
 
 # prevendo os próximos dias
 
-# pegando os dados de fechamento e colocando em x_treinar e y_label para prever os próximos dias
+# pegando os dados de fechamento e colocando em x_treinar e y_treinar para prever os próximos dias
 dados_reais = [modelo_entradas[len(modelo_entradas) + 1 - previsao_dias:len(modelo_entradas+1), 0]] 
 dados_reais = np.array(dados_reais) # transformando em array numpy
 dados_reais = np.reshape(dados_reais, (dados_reais.shape[0], dados_reais.shape[1], 1)) # redimensionando os dados
@@ -108,11 +108,3 @@ previsao = modelo.predict(dados_reais) # fazendo as previsões
 previsao = normalizando.inverse_transform(previsao) # desnormalizando os dados
 
 print(f'Preço previsto para amanhã: {previsao}')
-
-
-
-
-
-
-
-
